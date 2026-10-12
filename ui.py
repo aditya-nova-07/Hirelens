@@ -7,26 +7,73 @@ def apply_styles() -> None:
     st.markdown(
         """
         <style>
-        :root { --ink:#172b3a; --muted:#71818a; --teal:#14836e; --line:#e5eceb; --canvas:#f5f8f7; }
-        .stApp { background:var(--canvas); color:var(--ink); }
-        .block-container { max-width:1200px; padding-top:2rem; padding-bottom:3rem; }
-        [data-testid="stSidebar"] { background:#102a3a; }
-        [data-testid="stSidebar"] * { color:#e9f2f3; }
-        [data-testid="stSidebar"] hr { border-color:#294452; }
-        [data-testid="stSidebar"] [data-testid="stPageLink"] a { border-radius:9px; }
-        [data-testid="stSidebar"] [data-testid="stPageLink"] a:hover { background:#1b3b4b; }
-        .brand { font-size:1.55rem; font-weight:750; letter-spacing:-.04em; color:#fff; }
-        .brand span { color:#5bd0ad; }
-        .eyebrow { color:var(--teal); font-size:.75rem; font-weight:750; letter-spacing:.13em; text-transform:uppercase; }
-        .hero { background:linear-gradient(120deg,#fff,#f2faf7); border:1px solid var(--line); border-radius:20px; padding:1.6rem 1.8rem; margin-bottom:1.3rem; }
-        .hero p { color:var(--muted); margin-bottom:0; }
-        div[data-testid="stMetric"] { background:#fff; border:1px solid var(--line); border-radius:15px; padding:1rem 1.2rem; box-shadow:0 5px 18px #203b3b08; }
-        div[data-testid="stVerticalBlockBorderWrapper"] { background:#fff; border-color:var(--line); border-radius:16px; }
-        .stButton > button[kind="primary"] { background:var(--teal); border-color:var(--teal); border-radius:10px; font-weight:650; min-height:2.8rem; }
-        .stButton > button[kind="primary"]:hover { background:#0f6d5b; border-color:#0f6d5b; }
-        div[data-testid="stFileUploader"] { background:#fbfdfc; border:1px dashed #a5c4ba; border-radius:12px; }
-        [data-testid="stDataFrame"] { border:1px solid var(--line); border-radius:12px; overflow:hidden; }
-        @media(max-width:700px) { .block-container { padding:1rem .85rem 2rem; } .hero { padding:1.2rem; } }
+        :root {
+          color-scheme: light;
+          --hl-canvas:#f4f7fb; --hl-surface:#ffffff; --hl-surface-soft:#edf3fa;
+          --hl-ink:#17263d; --hl-muted:#53657c; --hl-line:#d8e2ee;
+          --hl-blue:#2563eb; --hl-blue-hover:#1d4ed8; --hl-accent:#60a5fa;
+          --hl-shadow:0 8px 24px rgba(20,42,74,.06);
+        }
+        :root[data-theme="dark"], body[data-theme="dark"], [data-theme="dark"] {
+          color-scheme:dark;
+          --hl-canvas:#0b1220; --hl-surface:#121d2e; --hl-surface-soft:#19283c;
+          --hl-ink:#edf4ff; --hl-muted:#bac9dd; --hl-line:#304158;
+          --hl-blue:#3b82f6; --hl-blue-hover:#60a5fa; --hl-accent:#93c5fd;
+          --hl-shadow:0 8px 24px rgba(0,0,0,.20);
+        }
+        .stApp { background:var(--hl-canvas); color:var(--hl-ink); }
+        .stApp, .stApp p, .stApp label, .stApp [data-testid="stMarkdownContainer"] { color:var(--hl-ink); }
+        .block-container { max-width:1240px; padding-top:1.8rem; padding-bottom:3rem; }
+        [data-testid="stSidebar"] { background:#101b2b; color:#e8f0fb; }
+        [data-testid="stSidebar"] h1, [data-testid="stSidebar"] h2,
+        [data-testid="stSidebar"] h3, [data-testid="stSidebar"] p,
+        [data-testid="stSidebar"] label, [data-testid="stSidebar"] .stCaption,
+        [data-testid="stSidebar"] [data-testid="stMarkdownContainer"] { color:#dce7f5; }
+        [data-testid="stSidebar"] hr { border-color:#33445b; }
+        [data-testid="stSidebar"] [data-testid="stSidebarNav"] { padding-top:.35rem; }
+        [data-testid="stSidebar"] [data-testid="stSidebarNavLink"] {
+          color:#e8f0fb !important; background:transparent; border-radius:10px;
+          margin:.12rem 0; transition:background-color .12s ease;
+        }
+        [data-testid="stSidebar"] [data-testid="stSidebarNavLink"] * { color:inherit !important; }
+        [data-testid="stSidebar"] [data-testid="stSidebarNavLink"]:hover {
+          color:#fff !important; background:#243b5d;
+        }
+        [data-testid="stSidebar"] [data-testid="stSidebarNavLink"]:focus-visible {
+          outline:2px solid #7db5ff; outline-offset:2px; color:#fff !important;
+        }
+        [data-testid="stSidebar"] [data-testid="stSidebarNavLink"][aria-current="page"] {
+          color:#fff !important; background:#1d4ed8; font-weight:650;
+        }
+        [data-testid="stSidebar"] [data-testid="stSidebarNavLink"][aria-current="page"] * { color:#fff !important; }
+        [data-testid="stSidebar"] [data-testid="stSidebarNavSeparator"] { color:#9fb2ca !important; }
+        [data-testid="stSidebar"] [data-testid="stPageLink"] a { border-radius:10px; }
+        [data-testid="stSidebar"] [data-testid="stPageLink"] a:hover { background:#243b5d; }
+        .brand { font-size:1.6rem; font-weight:760; letter-spacing:-.045em; color:#fff; }
+        .brand span { color:#7db5ff; }
+        .sidebar-tagline { color:#c3d2e7 !important; font-size:.82rem; line-height:1.5; margin-top:.25rem; }
+        .eyebrow { color:var(--hl-blue); font-size:.74rem; font-weight:750; letter-spacing:.13em; text-transform:uppercase; }
+        .hero { background:linear-gradient(120deg,var(--hl-surface),var(--hl-surface-soft)); border:1px solid var(--hl-line); border-radius:20px; padding:1.55rem 1.8rem; margin-bottom:1.3rem; box-shadow:var(--hl-shadow); }
+        .hero h1 { color:var(--hl-ink); letter-spacing:-.035em; margin:.28rem 0 .4rem; }
+        .hero p { color:var(--hl-muted); margin-bottom:0; line-height:1.55; }
+        div[data-testid="stMetric"] { background:var(--hl-surface); border:1px solid var(--hl-line); border-radius:15px; padding:1rem 1.2rem; box-shadow:var(--hl-shadow); }
+        div[data-testid="stMetric"] label, div[data-testid="stMetric"] [data-testid="stMetricLabel"] { color:var(--hl-muted); }
+        div[data-testid="stVerticalBlockBorderWrapper"] { background:var(--hl-surface); border-color:var(--hl-line); border-radius:16px; box-shadow:var(--hl-shadow); }
+        .stButton > button[kind="primary"] { background:var(--hl-blue); border-color:var(--hl-blue); border-radius:10px; font-weight:680; min-height:2.85rem; color:#fff; }
+        .stButton > button[kind="primary"]:hover { background:var(--hl-blue-hover); border-color:var(--hl-blue-hover); color:#fff; }
+        .stButton > button:disabled { opacity:.62; cursor:not-allowed; }
+        [data-testid="stTextArea"] textarea, [data-testid="stTextInput"] input,
+        [data-testid="stSelectbox"] [role="combobox"], [data-testid="stMultiSelect"] [role="combobox"] {
+          background:var(--hl-surface); color:var(--hl-ink); border-color:var(--hl-line); border-radius:10px;
+        }
+        [data-testid="stTextArea"] textarea::placeholder, [data-testid="stTextInput"] input::placeholder { color:var(--hl-muted); opacity:1; }
+        [data-testid="stFileUploader"] { background:var(--hl-surface-soft); border:1px dashed var(--hl-line); border-radius:12px; padding:.35rem; }
+        [data-testid="stFileUploader"] button { border-radius:8px; }
+        [data-testid="stDataFrame"] { border:1px solid var(--hl-line); border-radius:12px; overflow:hidden; }
+        [data-testid="stCaptionContainer"], .stCaption { color:var(--hl-muted); }
+        [role="listbox"], [role="option"] { background:var(--hl-surface); color:var(--hl-ink); }
+        [data-testid="stProgress"] { accent-color:var(--hl-blue); }
+        @media(max-width:700px) { .block-container { padding:1rem .85rem 2rem; } .hero { padding:1.2rem; border-radius:16px; } }
         </style>
         """,
         unsafe_allow_html=True,
@@ -36,7 +83,7 @@ def apply_styles() -> None:
 def sidebar() -> None:
     with st.sidebar:
         st.markdown('<div class="brand">Hire<span>Lens</span></div>', unsafe_allow_html=True)
-        st.caption("AI recruiting workspace")
+        st.markdown('<div class="sidebar-tagline">See the Match. Understand the Potential.</div>', unsafe_allow_html=True)
         st.divider()
         st.caption("Resume matching, made clearer.")
 

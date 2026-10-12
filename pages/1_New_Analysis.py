@@ -37,10 +37,10 @@ with right:
     with st.container(border=True):
         st.subheader("Resume files")
         st.caption("Upload PDF or DOCX files. Unsupported formats will be reported and skipped.")
-        st.caption(
-            "Resume text and extracted details are sent to Groq for AI analysis. "
-            "Upload documents only when you have permission to process them."
-        )
+        # st.caption(
+        #     "Resume text and extracted details are sent to Groq for AI analysis. "
+        #     "Upload documents only when you have permission to process them."
+        # )
         uploaded_files = st.file_uploader(
             "Choose documents",
             accept_multiple_files=True,
