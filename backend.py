@@ -13,27 +13,33 @@ from docx import Document
 from recommendations import ground_recommendations
 
 
+
 # =========================
 # 1. CONFIGURATION
 # =========================
 
 load_dotenv()
 
-my_api_key = os.getenv("GROQ_API_KEY")
+# Prefer Streamlit Cloud Secrets; fall back to .env locally.
+try:
+    my_api_key = st.secrets.get("GROQ_API_KEY")
+except Exception:
+    my_api_key = None
+
 if not my_api_key:
-    try:
-        my_api_key = st.secrets.get("GROQ_API_KEY")
-    except FileNotFoundError:
-        # Local development can use .env without creating Streamlit secrets.
-        my_api_key = None
+    my_api_key = os.getenv("GROQ_API_KEY")
 
 if not my_api_key:
     st.error("GROQ_API_KEY is missing. Set it in .env or Streamlit app secrets.")
     st.stop()
 
-# The inherited proxy settings can point to an unavailable local proxy. Direct
-# HTTPS connectivity to Groq is available, so avoid inheriting those settings.
-client = Groq(api_key=my_api_key, http_client=httpx.Client(trust_env=False))
+# The inherited proxy settings can point to an unavailable local proxy.
+# Direct HTTPS connectivity to Groq is available, so avoid inheriting those settings.
+client = Groq(
+    api_key=my_api_key,
+    http_client=httpx.Client(trust_env=False)
+)
+
 model = "openai/gpt-oss-120b"
 
 
